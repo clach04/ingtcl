@@ -25,7 +25,6 @@ EXEC SQL INCLUDE SQLCA;
 
 typedef struct cursor {
     short is_closed;
-    short is_allocated;
     char name[12]; /* statement name */
     IISQLDA *sqlda; /* statement descriptor */ 
     IISQLDA *ph_sqlda;
@@ -45,6 +44,7 @@ static int Disconnect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Ob
 static int CloseCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Do_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Execute_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+static int FetchColumnNames_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Prepare_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Connect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);

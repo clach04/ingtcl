@@ -55,8 +55,10 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
     sqlda = cursor->sqlda;
     ph_sqlda = cursor->ph_sqlda;
 
-    ckfree(sqlda);
-    ckfree(ph_sqlda);
+    /* TODO: proper deallocation */
+
+    ckfree((char*)sqlda);
+    ckfree((char*)ph_sqlda);
     ckfree((char*)cursor);
 
     Tcl_SetObjResult(interp, Tcl_NewBooleanObj(1));
@@ -552,6 +554,70 @@ Execute_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
 
     Tcl_SetObjResult(interp, Tcl_NewBooleanObj(1));
 
+    return TCL_OK;
+}
+
+static int 
+FetchColumnNames_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+/* 
+ * (For use from Tcl)
+ *
+ * IngTcl::fetch_row $session $statement
+ *
+ * This function fetches column names from database, on success it returns
+ * to Tcl list containing table columns, on fail it throws exception.
+ *
+ */
+{
+    int session;
+    Tcl_Obj *columns; /* List containing columns, it will be returned to Tcl on success */
+    IISQLDA *sqlda;
+    ing_cursor_t *cursor;
+    int i = 0; /* Counter */
+    int number_of_arguments = objc - 1;
+
+    if (number_of_arguments != 2)
+    {
+        Tcl_SetObjResult(interp, Tcl_NewStringObj(
+                "IngTcl: fetch_row: Expected excatly arguments, see usage:\n\n"
+                "IngTcl::fetch_row $session $statement\n",
+                -1
+            )
+        );
+        return TCL_ERROR;
+    }
+
+    if (Tcl_GetIntFromObj(interp, objv[1], &session) != TCL_OK)
+    {
+        /* If it is impossible to get int from object, then it is not integer */
+        Tcl_SetObjResult(interp, Tcl_NewStringObj(
+                "IngTcl: fetch_row: First supplied argument to IngTcl::fetch_row is not integer, see usage:\n\n"
+                "IngTcl::execute $session $statement\n",
+                -1
+            )
+        );
+        return TCL_ERROR;
+    }
+
+    /* Retrieve pointer to cursor */
+    sscanf(Tcl_GetString(objv[2]), "%p", &cursor);
+
+    sqlda = cursor->sqlda;
+
+    columns = Tcl_NewListObj(0, NULL);
+
+    for (i = 0; i < sqlda->sqld; ++i)
+    {
+        IISQLVAR *var;
+        Tcl_Obj *tcl_var;
+
+        var = &sqlda->sqlvar[i];
+        
+        tcl_var = Tcl_NewStringObj((char*)&var->sqlname.sqlnamec, var->sqlname.sqlnamel);
+        Tcl_ListObjAppendElement(interp, columns, tcl_var);
+    }
+
+    Tcl_SetObjResult(interp, columns);
     return TCL_OK;
 }
 
@@ -1055,6 +1121,7 @@ Ingtcl_Init(Tcl_Interp *interp)
     Tcl_CreateObjCommand(interp, "IngTcl::prepare", Prepare_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::execute", Execute_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::do", Do_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "IngTcl::fetch_column_names", FetchColumnNames_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::fetch_row", FetchRow_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::close_cursor", CloseCursor_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::disconnect", Disconnect_Cmd, NULL, NULL);
