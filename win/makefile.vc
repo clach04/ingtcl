@@ -16,6 +16,7 @@
 # Copyright (c) 2001 ActiveState Corporation.
 # Copyright (c) 2001-2002 David Gravereaux.
 # Copyright (c) 2003-2006 Pat Thoyts
+# Copyright (c) 2012 Tomasz Konojacki
 #
 #-------------------------------------------------------------------------
 # RCS: @(#)$Id: makefile.vc,v 1.14 2010/09/14 23:23:32 hobbs Exp $
@@ -141,6 +142,10 @@ MSG = ^
 You must run this makefile only from the directory it is in.^
 Please `cd` to its location first.
 !error $(MSG)
+!endif
+
+!if "$(II_SYSTEM)" == ""
+!error "II_SYSTEM must be defined"
 !endif
 
 #-------------------------------------------------------------------------

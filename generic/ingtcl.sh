@@ -41,6 +41,7 @@ static int SetAutoCommit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl
 static int Rollback_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Commit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Disconnect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+static int IsCursorClosed_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int CloseCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Do_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 static int Execute_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
