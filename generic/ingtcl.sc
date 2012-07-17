@@ -25,7 +25,7 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
 /* 
  * (For use from Tcl)
  *
- * IngTcl::delete_cursor $session $statement
+ * IngTcl::delete_cursor session cursor
  *
  * This function deletes specified closed cursor.
  * On success it returns true to Tcl, otherwise it throws an exception.
@@ -43,7 +43,7 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: delete_cursor: Expected exactly two arguments, see usage:\n\n"
-                "IngTcl::delete_cursor $session $cursor\n",
+                "IngTcl::delete_cursor session cursor\n",
                 -1
             )
         );
@@ -70,7 +70,7 @@ SetAutoCommit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const
 /* 
  * (For use from Tcl)
  *
- * IngTcl::set_autocommit $session $enable_autocommit
+ * IngTcl::set_autocommit session enable_autocommit
  *
  * This function enables or disables autocommit.
  * On success it returns true to Tcl, on failure it throws exception.
@@ -87,7 +87,7 @@ SetAutoCommit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: set_autocommit: Expected exactly two arguments, see usage:\n\n"
-                "IngTcl::set_autocommit $session $bool\n",
+                "IngTcl::set_autocommit session enable_autocommit\n",
                 -1
             )
         );
@@ -99,7 +99,7 @@ SetAutoCommit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: set_autocommit: First supplied argument to IngTcl::set_autocommit is not integer, see usage:\n\n"
-                "IngTcl::set_autocommit $session\n",
+                "IngTcl::set_autocommit session enable_autocommit\n",
                 -1
             )
         );
@@ -110,8 +110,8 @@ SetAutoCommit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const
     {
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
-                "IngTcl: set_autocommit: First supplied argument to IngTcl::set_autocommit is not integer, see usage:\n\n"
-                "IngTcl::set_autocommit $session\n",
+                "IngTcl: set_autocommit: Second supplied argument to IngTcl::set_autocommit is not boolean, see usage:\n\n"
+                "IngTcl::set_autocommit session enable_autocommit\n",
                 -1
             )
         );
@@ -144,7 +144,7 @@ Rollback_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
 /* 
  * (For use from Tcl)
  *
- * IngTcl::rollback $session
+ * IngTcl::rollback session
  *
  * This function rollbacks transaction.
  * On success it returns true to Tcl, on failure it throws exception.
@@ -160,7 +160,7 @@ Rollback_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: rollback: Expected exactly one argument, see usage:\n\n"
-                "IngTcl::rollback $session\n",
+                "IngTcl::rollback session\n",
                 -1
             )
         );
@@ -172,7 +172,7 @@ Rollback_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: rollback: First supplied argument to IngTcl::rollback is not integer, see usage:\n\n"
-                "IngTcl::rollback $session\n",
+                "IngTcl::rollback session\n",
                 -1
             )
         );
@@ -198,7 +198,7 @@ Commit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]
 /* 
  * (For use from Tcl)
  *
- * IngTcl::commit $session
+ * IngTcl::commit session
  *
  * This function commits transaction.
  * On success it returns true to Tcl, on failure it throws exception.
@@ -214,7 +214,7 @@ Commit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: commit: Expected exactly one argument, see usage:\n\n"
-                "IngTcl::commit $session\n",
+                "IngTcl::commit session\n",
                 -1
             )
         );
@@ -226,7 +226,7 @@ Commit_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: commit: First supplied argument to IngTcl::commit is not integer, see usage:\n\n"
-                "IngTcl::commmit $session\n",
+                "IngTcl::commmit session\n",
                 -1
             )
         );
@@ -252,7 +252,7 @@ Disconnect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const ob
 /* 
  * (For use from Tcl)
  *
- * IngTcl::disconnect $session
+ * IngTcl::disconnect session
  *
  * This function closes database connection.
  * On success it returns true to Tcl, on failure it throws exception.
@@ -268,7 +268,7 @@ Disconnect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const ob
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: disconnect: Expected exactly one argument, see usage:\n\n"
-                "IngTcl::disconnect $session\n",
+                "IngTcl::disconnect session\n",
                 -1
             )
         );
@@ -280,7 +280,7 @@ Disconnect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const ob
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: disconnect: First supplied argument to IngTcl::disconnect is not integer, see usage:\n\n"
-                "IngTcl::disconnect $session\n",
+                "IngTcl::disconnect session\n",
                 -1
             )
         );
@@ -304,11 +304,47 @@ Disconnect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const ob
 }
 
 static int 
+IsCursorClosed_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+/* 
+ * (For use from Tcl)
+ *
+ * IngTcl::is_cursor_closed session statement
+ *
+ * This function checks wheter cursor is closed.
+ * If true it returns 1, otherwise 0.
+ *
+ */
+{
+    ing_cursor_t *cursor;
+    int number_of_arguments = objc - 1;
+
+    if (number_of_arguments != 2)
+    {
+        Tcl_SetObjResult(interp, Tcl_NewStringObj(
+                "IngTcl: is_cursor_closed: Expected exactly two arguments, see usage:\n\n"
+                "IngTcl::is_cursor_closed session cursor\n",
+                -1
+            )
+        );
+        return TCL_ERROR;
+    }
+
+    sscanf(Tcl_GetString(objv[2]), "%p", &cursor);
+
+    if (cursor->is_closed)
+        Tcl_SetObjResult(interp, Tcl_NewBooleanObj(1));
+    else
+        Tcl_SetObjResult(interp, Tcl_NewBooleanObj(0));
+
+    return TCL_OK;
+}
+
+static int 
 CloseCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 /* 
  * (For use from Tcl)
  *
- * IngTcl::close_cursor $session $statement
+ * IngTcl::close_cursor session statement
  *
  * This function closes specified cursor.
  * On success it returns true to Tcl, otherwise it throws an exception.
@@ -322,7 +358,7 @@ CloseCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const o
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: close_cursor: Expected exactly two arguments, see usage:\n\n"
-                "IngTcl::close_cursor $session $cursor\n",
+                "IngTcl::close_cursor session cursor\n",
                 -1
             )
         );
@@ -342,7 +378,7 @@ Do_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 /* 
  * (For use from Tcl)
  *
- * IngTcl::do $session $statement
+ * IngTcl::do session statement
  *
  * This function executes provided statement. It NEEDS NOT to be SELECT 
  * statement.
@@ -362,7 +398,7 @@ Do_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: do: Expected exactly two arguments, see usage:\n\n"
-                "IngTcl::do $session $statement\n",
+                "IngTcl::do session statement\n",
                 -1
             )
         );
@@ -374,7 +410,7 @@ Do_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: do: First supplied argument to IngTcl::do is not integer, see usage:\n\n"
-                "IngTcl::do $session $statement\n",
+                "IngTcl::do session statement\n",
                 -1
             )
         );
@@ -405,7 +441,7 @@ Execute_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
 /* 
  * (For use from Tcl)
  *
- * IngTcl::execute $session $statement $arg1 $arg2 ...
+ * IngTcl::execute session statement ?arg1 arg2 ...?
  *
  * This function fetches executes statement prepared by IngTcl::prepare. 
  * On success it returns true to Tcl, otherwise it throws an exception.
@@ -425,7 +461,7 @@ Execute_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: execute: Expected at least two arguments, see usage:\n\n"
-                "IngTcl::execute $session $statement $arg1 $arg2 ...\n",
+                "IngTcl::execute session statement ?arg1 arg2 ...?\n",
                 -1
             )
         );
@@ -437,7 +473,7 @@ Execute_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: execute: First supplied argument to IngTcl::execute is not integer, see usage:\n\n"
-                "IngTcl::execute $session $statement $arg1 $arg2 ...\n",
+                "IngTcl::execute session statement ?arg1 arg2 ...?\n",
                 -1
             )
         );
@@ -562,7 +598,7 @@ FetchColumnNames_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *co
 /* 
  * (For use from Tcl)
  *
- * IngTcl::fetch_row $session $statement
+ * IngTcl::fetch_row session statement
  *
  * This function fetches column names from database, on success it returns
  * to Tcl list containing table columns, on fail it throws exception.
@@ -580,7 +616,7 @@ FetchColumnNames_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *co
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: fetch_row: Expected excatly arguments, see usage:\n\n"
-                "IngTcl::fetch_row $session $statement\n",
+                "IngTcl::fetch_row session statement\n",
                 -1
             )
         );
@@ -592,7 +628,7 @@ FetchColumnNames_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *co
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: fetch_row: First supplied argument to IngTcl::fetch_row is not integer, see usage:\n\n"
-                "IngTcl::execute $session $statement\n",
+                "IngTcl::execute session statement\n",
                 -1
             )
         );
@@ -626,7 +662,7 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
 /* 
  * (For use from Tcl)
  *
- * IngTcl::fetch_row $session $statement
+ * IngTcl::fetch_row session statement
  *
  * This function fetches row from database, on success it returns to Tcl list 
  * containing table row, on fail it throws exception.
@@ -647,7 +683,7 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: fetch_row: Expected excatly arguments, see usage:\n\n"
-                "IngTcl::fetch_row $session $statement\n",
+                "IngTcl::fetch_row session statement\n",
                 -1
             )
         );
@@ -659,7 +695,7 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: fetch_row: First supplied argument to IngTcl::fetch_row is not integer, see usage:\n\n"
-                "IngTcl::execute $session $statement\n",
+                "IngTcl::fetch_row session statement\n",
                 -1
             )
         );
@@ -799,10 +835,17 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
     EXEC SQL SET_SQL(SESSION = :session);
     EXEC SQL FETCH :statement_name USING DESCRIPTOR :sqlda;
     
+    /* Create empty list */
+    row = Tcl_NewListObj(0, NULL);
+
     if (sqlca.sqlcode == 100)
     {
         /* There is no more data so we can close cursor */
         close_cursor(cursor);
+
+        Tcl_SetObjResult(interp, row);
+
+        return TCL_OK;
     }
     
     /* Check for errors */
@@ -811,9 +854,6 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
         Tcl_SetObjResult(interp, Tcl_NewStringObj(errstr, -1));
         return TCL_ERROR;
     }
-
-    /* Something is fetched, create empty list */
-    row = Tcl_NewListObj(0, NULL);
 
     /* Put fetched row into list */
     for (i = 0; i < sqlda->sqld; ++i)
@@ -862,7 +902,7 @@ Prepare_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
 /* 
  * (For use from Tcl)
  *
- * IngTcl::prepare $session $statement
+ * IngTcl::prepare session statement
  *
  * This function prepares SQL statement for SQL error. On error it throws
  * exception, on success it returns statement cursor to Tcl.
@@ -886,7 +926,7 @@ Prepare_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
     {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: prepare: Expected exactly two arguments, see usage:\n\n"
-                "IngTcl::prepare $session $statement\n",
+                "IngTcl::prepare session statement\n",
                 -1
             )
         );
@@ -898,7 +938,7 @@ Prepare_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
         /* If it is impossible to get int from object, then it is not integer */
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: prepare: First supplied argument to IngTcl::prepare is not integer, see usage:\n\n"
-                "IngTcl::prepare $session $statement\n",
+                "IngTcl::prepare session statement\n",
                 -1
             )
         );
@@ -980,13 +1020,7 @@ Connect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
 /* 
  * (For use from Tcl)
  *
- * IngTcl::connect $dbname
- * or:
- * IngTcl::connect $dbname $login
- * or:
- * IngTcl::connect $dbname $login $password
- * or:
- * IngTcl::connect $dbname $login $password $options
+ * IngTcl::connect dbname ?login? ?password? ?options?
  *
  * This function connects to Ingres database. On error it throws exception,
  * otherwise it returns session ID to Tcl.
@@ -1031,13 +1065,7 @@ Connect_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[
         Tcl_SetObjResult(interp, Tcl_NewStringObj(
                 "IngTcl: connect: Invalid number of arguments\n"
                 "Usage:\n\n"
-                "IngTcl::connect $dbname\n\n"
-                "or:\n\n"
-                "IngTcl::connect $dbname $login\n\n"
-                "or:\n\n"
-                "IngTcl::connect $dbname $login $password\n\n"
-                "or:\n\n"
-                "IngTcl::connect $dbname $login $password $options\n",
+                "IngTcl::connect dbname ?login? ?password? ?options?\n",
                 -1
             )
         );
@@ -1123,6 +1151,7 @@ Ingtcl_Init(Tcl_Interp *interp)
     Tcl_CreateObjCommand(interp, "IngTcl::do", Do_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::fetch_column_names", FetchColumnNames_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::fetch_row", FetchRow_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "IngTcl::is_cursor_closed", IsCursorClosed_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::close_cursor", CloseCursor_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::disconnect", Disconnect_Cmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "IngTcl::commit", Commit_Cmd, NULL, NULL);
