@@ -93,7 +93,7 @@ Installation instructions:
 To build and install IngTcl under UNIX/Linux you need following software;
 
 - Ingres
-- Tcl
+- Tcl (on some Linux distributions you need tcl-dev or tcl-devel package)
 - Visual C++
 
 Note that if II_SYSTEM environment variable is not set, build process will
