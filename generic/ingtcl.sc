@@ -30,7 +30,6 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
  * This function deletes specified closed cursor.
  * On success it returns true to Tcl, otherwise it throws an exception.
  *
- * Well, it only frees cursor, not sqldata, so memory leaks are present.
  *
  */
 {
@@ -55,7 +54,13 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
     sqlda = cursor->sqlda;
     ph_sqlda = cursor->ph_sqlda;
 
-    /* TODO: proper deallocation */
+    for (i = 0; i < sqlda->sqld; ++i)
+    {
+        IISQLVAR *var;
+
+        var = &sqlda->sqlvar[i];
+        ckfree(var->sqldata);
+    }
 
     ckfree((char*)sqlda);
     ckfree((char*)ph_sqlda);
@@ -762,64 +767,64 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
             break;
         case IISQ_DTE_TYPE:
             var->sqllen = IISQ_DTE_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_TSW_TYPE:
             var->sqllen = IISQ_TSW_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_TSWO_TYPE:
             var->sqllen = IISQ_TSWO_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_TSTMP_TYPE:
             var->sqllen = IISQ_TSTMP_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_ADTE_TYPE:
             var->sqllen = IISQ_ADTE_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_TMWO_TYPE:
             var->sqllen = IISQ_TMWO_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_TMW_TYPE:
             var->sqllen = IISQ_TMW_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_TME_TYPE:
             var->sqllen = IISQ_TME_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_INYM_TYPE:
             var->sqllen = IISQ_INTYM_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_INDS_TYPE:
             var->sqllen = IISQ_INTDS_LEN;
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_CHR_TYPE:
         case IISQ_CHA_TYPE:
         case IISQ_BYTE_TYPE:
         case IISQ_TXT_TYPE:
-            var->sqldata = ckalloc(var->sqllen);
+            var->sqldata = ckalloc(var->sqllen + 1);
             var->sqltype = IISQ_CHA_TYPE;
             break;
         case IISQ_VCH_TYPE:
         case IISQ_VBYTE_TYPE:
-            var->sqldata = ckalloc(sizeof(short) + var->sqllen);
+            var->sqldata = ckalloc(sizeof(short) + var->sqllen + 1);
             var->sqltype = IISQ_VCH_TYPE;
             break;
         case IISQ_BOO_TYPE:
