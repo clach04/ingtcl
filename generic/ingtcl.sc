@@ -30,7 +30,6 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
  * This function deletes specified closed cursor.
  * On success it returns true to Tcl, otherwise it throws an exception.
  *
- *
  */
 {
     ing_cursor_t *cursor;
