@@ -327,7 +327,7 @@ TESTFLAGS = $(TESTFLAGS) -file $(TESTPAT)
 
 all:	    setup $(PROJECT)
 $(PROJECT): setup pkgIndex $(PRJLIB)
-install:    install-binaries install-libraries install-docs
+install:    install-binaries install-libraries
 pkgIndex:   $(OUT_DIR)\pkgIndex.tcl
 
 test: setup $(PROJECT)
@@ -451,9 +451,6 @@ install-libraries: $(OUT_DIR)\pkgIndex.tcl
 	@echo Installing package index in '$(SCRIPT_INSTALL_DIR)'
 	@$(CPY) $(OUT_DIR)\pkgIndex.tcl $(SCRIPT_INSTALL_DIR)
 
-install-docs:
-	@echo Installing documentation files to '$(DOC_INSTALL_DIR)'
-	@if exist $(DOCDIR) $(CPY) $(DOCDIR)\*.n "$(DOC_INSTALL_DIR)"
 
 #---------------------------------------------------------------------
 # Clean up
