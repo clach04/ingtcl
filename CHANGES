@@ -1,3 +1,9 @@
+See the file "license.terms" for information on usage and redistribution
+of this file, and for a DISCLAIMER OF ALL WARRANTIES.                   
+                                                                       
+Copyright (c) 2012 Tomasz Konojacki
+========================================================================
+
 v0.2     TBD
  - NULL is returned to user as empty string
 v0.1     2012.07.18
