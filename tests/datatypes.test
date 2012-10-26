@@ -6,7 +6,7 @@
 #
 
 package require tcltest 2.0
-package require IngTcl;
+package require IngTcl
 namespace import ::tcltest::*
 
 proc dbconnect {} {
@@ -15,14 +15,14 @@ proc dbconnect {} {
     }
 
     if {[info exists ::env(INGTCL_DBUSER)] && [info exists ::env(INGTCL_PASSWORD)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
     } elseif {[info exists ::env(INGTCL_DBUSER)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
     } else {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME)]
     }
 
-    return $conn;
+    return $conn
 }
 
 test datatypes-1 {Connect to database.} {
@@ -30,8 +30,8 @@ test datatypes-1 {Connect to database.} {
 } 1
 
 # Silently ignore error
-catch {IngTcl::do $session {drop table testdfaas}};
-IngTcl::commit $session;
+catch {IngTcl::do $session {drop table testdfaas}}
+IngTcl::commit $session
 
 test datatypes-2 {CREATE TABLE.} {
     IngTcl::do $session {
@@ -43,56 +43,56 @@ test datatypes-2 {CREATE TABLE.} {
             ppp FLOAT,
             ccc ANSIDATE
         )
-    };
+    }
 } 1
 
 test datatypes-3 {INSERT.} {
     IngTcl::do $session { 
         INSERT INTO testdfaas (id, foo, bar, etc, ppp, ccc)
         VALUES (3412432, 'FoobAr', 'Larry', 'Wall', 1.3, '1963-03-15')
-    };
+    }
 } 1
 
 test datatypes-4 {PREPARE SELECT.} {
-    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}];
-    info exists cursor;
+    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}]
+    info exists cursor
 } 1
 
 test datatypes-5 {execute SELECT.} {
-    IngTcl::execute $session $cursor;
+    IngTcl::execute $session $cursor
 } 1
 
 test datatypes-6 {Fetch row.} {
-    set list [IngTcl::fetch_row $session $cursor];
-    info exists list;
+    set list [IngTcl::fetch_row $session $cursor]
+    info exists list
 } 1
 
 test datatypes-7 {Equality of first value.} {
-    expr {[lindex $list 0] == 3412432};
+    expr {[lindex $list 0] == 3412432}
 } 1
 
 test datatypes-8 {Equality of 2nd value.} {
-    expr {[lindex $list 1] == "FoobAr"};
+    expr {[lindex $list 1] == "FoobAr"}
 } 1
 
 test datatypes-9 {Equality of 3rd value.} {
-    expr {[lindex $list 2] == "Larry     "};
+    expr {[lindex $list 2] == "Larry     "}
 } 1
 
 test datatypes-10 {Equality of 4th value.} {
-    expr {[lindex $list 3] == "Wall      "};
+    expr {[lindex $list 3] == "Wall      "}
 } 1
 
 test datatypes-11 {Equality of 4th value.} {
-    expr {[lindex $list 4] == 1.3};
+    expr {[lindex $list 4] == 1.3}
 } 1
 
 test datatypes-12 {Equality of 5th value.} {
-    expr {[lindex $list 5] == "1963-03-15"};
+    expr {[lindex $list 5] == "1963-03-15"}
 } 1
 
 test datatypes-13 {Rollback.} {
-    IngTcl::rollback $session;
+    IngTcl::rollback $session
 } 1
 
 test datatypes-14 {CREATE TABLE (2).} {
@@ -109,20 +109,20 @@ test datatypes-14 {CREATE TABLE (2).} {
             ppp INTERVAL YEAR TO MONTH,
             ccc INTERVAL DAY TO SECOND
         )
-    };
+    }
 } 1
 
 test datatypes-15 {Delete cursor.} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test datatypes-16 {Prepare INSERT (2).} {
     set cursor [IngTcl::prepare $session "
         INSERT INTO testdfaas (id, foo, bar, etc, dec, lol, psa, uuu, ppp, ccc)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    "];
-    info exists cursor;
+    "]
+    info exists cursor
 } 1
 
 test datatypes-17 {Execute INSERT (2).} {
@@ -130,68 +130,68 @@ test datatypes-17 {Execute INSERT (2).} {
 } 1
 
 test datatypes-18 {Delete cursor (2).} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test datatypes-19 {PREPARE SELECT (2).} {
-    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}];
-    info exists cursor;
+    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}]
+    info exists cursor
 } 1
 
 test datatypes-20 {execute SELECT (2).} {
-    IngTcl::execute $session $cursor;
+    IngTcl::execute $session $cursor
 } 1
 
 test datatypes-21 {Fetch row (2).} {
-    set list [IngTcl::fetch_row $session $cursor];
-    info exists list;
+    set list [IngTcl::fetch_row $session $cursor]
+    info exists list
 } 1
 
 test datatypes-22 {Equality of first value. (2)} {
-    expr {[lindex $list 0] == 456};
+    expr {[lindex $list 0] == 456}
 } 1
 
 test datatypes-23 {Equality of 2nd value. (2)} {
-    binary scan [lindex $list 1] "a*" bin;
-    expr {$bin == "\x00\x01\x02\x03"};
+    binary scan [lindex $list 1] "a*" bin
+    expr {$bin == "\x00\x01\x02\x03"}
 } 1
 
 test datatypes-24 {Equality of 3rd value. (2)} {
-    binary scan [lindex $list 2] "a*" bin;
-    expr {$bin == "\x04\x05\x06\x00\x00\x00\x00\x00\x00\x00"};
+    binary scan [lindex $list 2] "a*" bin
+    expr {$bin == "\x04\x05\x06\x00\x00\x00\x00\x00\x00\x00"}
 } 1
 
 test datatypes-25 {Equality of 4th value. (2)} {
-    expr {[lindex $list 3] == "1963-03-15 04:55:22.000100"};
+    expr {[lindex $list 3] == "1963-03-15 04:55:22.000100"}
 } 1
 
 test datatypes-26 {Equality of 5th value. (2)} {
-    expr {[lindex $list 4] == 96};
+    expr {[lindex $list 4] == 96}
 } 1
 
 test datatypes-27 {Equality of 6th value. (2)} {
-    expr {[lindex $list 5] == "12:45:11"};
+    expr {[lindex $list 5] == "12:45:11"}
 } 1
 
 test datatypes-28 {Equality of 7th value. (2)} {
-    expr {[lindex $list 6] == "12:47:32-04:00"};
+    expr {[lindex $list 6] == "12:47:32-04:00"}
 } 1
 
 test datatypes-29 {Equality of 8th value. (2)} {
-    expr {[lindex $list 7] == "12:45:02"};
+    expr {[lindex $list 7] == "12:45:02"}
 } 1
 
 test datatypes-30 {Equality of 9th value. (2)} {
-    expr {[lindex $list 8] == "55-04"};
+    expr {[lindex $list 8] == "55-04"}
 } 1
 
 test datatypes-31 {Equality of 10th value. (2)} {
-    expr {[lindex $list 9] == "-18 12:02:23"};
+    expr {[lindex $list 9] == "-18 12:02:23"}
 } 1
 
 test datatypes-32 {Rollback.} {
-    IngTcl::rollback $session;
+    IngTcl::rollback $session
 } 1
 
 test datatypes-33 {CREATE TABLE (3).} {
@@ -201,66 +201,66 @@ test datatypes-33 {CREATE TABLE (3).} {
             foo TIMESTAMP WITH TIME ZONE,
             bar TIMESTAMP WITH LOCAL TIME ZONE
         )
-    };
+    }
 } 1
 
 test datatypes-34 {Delete cursor (3).} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test datatypes-35 {Prepare INSERT (3).} {
     set cursor [IngTcl::prepare $session "
         INSERT INTO testdfaas (bsc, foo, bar)
         VALUES (?, ?, ?)
-    "];
-    info exists cursor;
+    "]
+    info exists cursor
 } 1
 
 test datatypes-36 {Execute INSERT (3).} {
-    IngTcl::execute $session $cursor 10.21 "2005-01-12 12:47:32.244561-04:00" "2006-01-12 10:56:12.245562";
+    IngTcl::execute $session $cursor 10.21 "2005-01-12 12:47:32.244561-04:00" "2006-01-12 10:56:12.245562"
 } 1
 
 test datatypes-37 {Delete cursor(4).} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test datatypes-38 {PREPARE SELECT (3).} {
-    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}];
-    info exists cursor;
+    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}]
+    info exists cursor
 } 1
 
 test datatypes-39 {execute SELECT (3).} {
-    IngTcl::execute $session $cursor;
+    IngTcl::execute $session $cursor
 } 1
 
 test datatypes-40 {Fetch row (3).} {
-    set list [IngTcl::fetch_row $session $cursor];
-    info exists list;
+    set list [IngTcl::fetch_row $session $cursor]
+    info exists list
 } 1
 
 test datatypes-41 {Equality of first value. (3)} {
-    expr {[lindex $list 0] == 10.21};
+    expr {[lindex $list 0] == 10.21}
 } 1
 
 test datatypes-42 {Equality of 2nd value. (3)} {
-    expr {[lindex $list 1] == "2005-01-12 12:47:32.244561-04:00"};
+    expr {[lindex $list 1] == "2005-01-12 12:47:32.244561-04:00"}
 } 1
 
 test datatypes-43 {Equality of 3rd value. (3)} {
-    expr {[lindex $list 2] == "2006-01-12 10:56:12.245562"};
+    expr {[lindex $list 2] == "2006-01-12 10:56:12.245562"}
 } 1
 
 test datatypes-44 {Delete cursor (5).} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test datatypes-45 {Rollback.} {
-    IngTcl::rollback $session;
+    IngTcl::rollback $session
 } 1
 
 test datatypes-46 {Disconnect.} {
-    IngTcl::disconnect $session;
+    IngTcl::disconnect $session
 } 1

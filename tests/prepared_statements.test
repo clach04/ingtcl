@@ -6,7 +6,7 @@
 #
 
 package require tcltest 2.0
-package require IngTcl;
+package require IngTcl
 namespace import ::tcltest::*
 
 
@@ -16,74 +16,74 @@ proc dbconnect {} {
     }
 
     if {[info exists ::env(INGTCL_DBUSER)] && [info exists ::env(INGTCL_PASSWORD)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
     } elseif {[info exists ::env(INGTCL_DBUSER)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
     } else {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME)]
     }
 
-    return $conn;
+    return $conn
 }
 
 test prepared_statements-1 {Connect to database.} {
-    set session [dbconnect];
-    info exists session;
+    set session [dbconnect]
+    info exists session
 } 1
 
 # Silently ignore error
-catch {IngTcl::do $session {drop table testdfaas}};
-IngTcl::commit $session;
+catch {IngTcl::do $session {drop table testdfaas}}
+IngTcl::commit $session
 
 test prepared_statements-2 {Create table.} {
-    IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60))};
+    IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60))}
 } 1
 
 test prepared_statements-3 {Prepare INSERT.} {
-    set cursor [IngTcl::prepare $session {INSERT INTO testdfaas VALUES (?, ?)}];
-    info exists cursor;
+    set cursor [IngTcl::prepare $session {INSERT INTO testdfaas VALUES (?, ?)}]
+    info exists cursor
 } 1
 
 test prepared_statements-4 {Execute INSERT.} {
-    IngTcl::execute $session $cursor 1234567 "kielbasa";
+    IngTcl::execute $session $cursor 1234567 "kielbasa"
 } 1
 
 test prepared_statements-5 {Delete cursor.} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test prepared_statements-6 {Prepare SELECT.} {
-    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}];
-    info exists cursor;
+    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}]
+    info exists cursor
 } 1
 
 test prepared_statements-7 {Execute SELECT.} {
-    IngTcl::execute $session $cursor;
+    IngTcl::execute $session $cursor
 } 1
 
 test prepared_statements-8 {Fetch row.} {
-    set list [IngTcl::fetch_row $session $cursor];
-    info exists list;
+    set list [IngTcl::fetch_row $session $cursor]
+    info exists list
 } 1
 
 test prepared_statements-9 {Equality of first value.} {
-    expr {[lindex $list 0] == 1234567};
+    expr {[lindex $list 0] == 1234567}
 } 1
 
 test prepared_statements-10 {Equality of second value.} {
-    expr {[lindex $list 1] == "kielbasa"};
+    expr {[lindex $list 1] == "kielbasa"}
 } 1
 
 test prepared_statements-11 {Delete cursor (2).} {
-    IngTcl::close_cursor $session $cursor;
-    IngTcl::delete_cursor $session $cursor;
+    IngTcl::close_cursor $session $cursor
+    IngTcl::delete_cursor $session $cursor
 } 1
 
 test prepared_statements-12 {Rollback.} {
-    IngTcl::rollback $session;
+    IngTcl::rollback $session
 } 1
 
 test prepared_statements-13 {Disconnect.} {
-    IngTcl::disconnect $session;
+    IngTcl::disconnect $session
 } 1

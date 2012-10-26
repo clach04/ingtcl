@@ -6,14 +6,14 @@
 #
 
 package require tcltest 2.0
-package require IngTcl;
+package require IngTcl
 namespace import ::tcltest::*
 
 
 test quote-1 {Test quoting.} {
-    IngTcl::quote {'abc'};
-} {'''abc'''};
+    IngTcl::quote {'abc'}
+} {'''abc'''}
 
 test quote-2 {Test quoting (2).} {
-    IngTcl::quote {abc};
-} {'abc'};
+    IngTcl::quote {abc}
+} {'abc'}

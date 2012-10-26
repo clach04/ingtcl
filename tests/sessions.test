@@ -6,7 +6,7 @@
 #
 
 package require tcltest 2.0
-package require IngTcl;
+package require IngTcl
 namespace import ::tcltest::*
 
 
@@ -16,14 +16,14 @@ proc dbconnect {} {
     }
 
     if {[info exists ::env(INGTCL_DBUSER)] && [info exists ::env(INGTCL_PASSWORD)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
     } elseif {[info exists ::env(INGTCL_DBUSER)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
     } else {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME)];
+        set conn [IngTcl::connect $::env(INGTCL_DBNAME)]
     }
 
-    return $conn;
+    return $conn
 }
 
 test sessions-1 {Check if session-id is incremented (first-run).} {
@@ -32,23 +32,23 @@ test sessions-1 {Check if session-id is incremented (first-run).} {
 } 1
 
 test sessions-2 {Check if session-id is incremented (second-run).} {
-    set session2 [dbconnect];
-    expr {($session1 + 1) == $session2};
+    set session2 [dbconnect]
+    expr {($session1 + 1) == $session2}
 } 1
 
 test sessions-3 {Check if session-id is incremented (third-run).} {
     set session3 [dbconnect]
-    expr {($session1 + 2) == $session3};
+    expr {($session1 + 2) == $session3}
 } 1
 
 test sessions-4 {Disconnect (First connection).} {
-    IngTcl::disconnect $session1;
+    IngTcl::disconnect $session1
 } 1
 
 test sessions-5 {Disconnect (Second connection).} {
-    IngTcl::disconnect $session2;
+    IngTcl::disconnect $session2
 } 1
 
 test sessions-6 {Disconnect (Third connection).} {
-    IngTcl::disconnect $session3;
+    IngTcl::disconnect $session3
 } 1
