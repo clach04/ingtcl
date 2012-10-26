@@ -5,13 +5,13 @@
 # Copyright (c) 2012 Tomasz Konojacki
 #
 
-package provide IngTcl 0.1;
+package provide IngTcl 0.1
 
 namespace eval ::IngTcl {
     namespace export *
 }
 
 proc ::IngTcl::quote {str} {
-    regsub -all {'} $str {''} str;
-    return "'$str'";
+    regsub -all {'} $str {''} str
+    return "'$str'"
 }
