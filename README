@@ -36,7 +36,7 @@ IngTcl is very easy to use, see "Examples" section.
 3. Installation under Windows
 =============================
 
-To build and install IngTcl under Windows you need following software;
+To build and install IngTcl under Windows you need following software:
 
 - Ingres
 - Tcl (ActiveTcl is recommended)
@@ -89,7 +89,7 @@ Installation instructions:
 4. Installation under UNIX/Linux
 ================================
 
-To build and install IngTcl under UNIX/Linux you need following software;
+To build and install IngTcl under UNIX/Linux you need following software:
 
 - Ingres
 - Tcl (on some Linux distributions you need tcl-dev or tcl-devel package)
@@ -248,30 +248,30 @@ Please report successes and failures to xenu@poczta.onet.pl
 
 # This example script fetches all rows from table 'lol'
 
-package require IngTcl;
+package require IngTcl
 
-set session [IngTcl::connect {somedb}];
+set session [IngTcl::connect {somedb}]
 
-set cursor [IngTcl::prepare $session "select * from lol"];
-IngTcl::execute $session $cursor;
+set cursor [IngTcl::prepare $session "select * from lol"]
+IngTcl::execute $session $cursor
 
-set columns [IngTcl::fetch_column_names $session $cursor];
+set columns [IngTcl::fetch_column_names $session $cursor]
 
-set row 0;
+set row 0
 while {![IngTcl::is_cursor_closed $session $cursor]} {
-    set list [IngTcl::fetch_row $session $cursor];
+    set list [IngTcl::fetch_row $session $cursor]
     if {[llength $list] > 0} { # Check if list is not empty
-        set column 0;
-        puts {~~~~~~~~~};
-        puts "Row: $row";
-        puts {~~~~~~~~~};
+        set column 0
+        puts {~~~~~~~~~}
+        puts "Row: $row"
+        puts {~~~~~~~~~}
         foreach value $list {
-            puts "[lindex $columns $column] => $value";
-            incr i;
+            puts "[lindex $columns $column] => $value"
+            incr i
         }
     }
-    incr row;
-};
+    incr row
+}
 
 
 ##### SECOND EXAMPLE #####
@@ -279,25 +279,25 @@ while {![IngTcl::is_cursor_closed $session $cursor]} {
 # It does exactly the same thing as first example, but this time we're not using
 # IngTcl::is_cursor_closed
 
-package require IngTcl;
+package require IngTcl
 
-set session [IngTcl::connect {demodb}];
+set session [IngTcl::connect {demodb}]
 
-set cursor [IngTcl::prepare $session "select * from lol"];
+set cursor [IngTcl::prepare $session "select * from lol"]
 
-IngTcl::execute $session $cursor;
+IngTcl::execute $session $cursor
 
-set columns [IngTcl::fetch_column_names $session $cursor];
+set columns [IngTcl::fetch_column_names $session $cursor]
 
-set row 0;
+set row 0
 while {[llength [set list [IngTcl::fetch_row $session $cursor]]] > 0} {
-    set column 0;
-    puts {---------};
-    puts "Row: $row";
-    puts {---------};
+    set column 0
+    puts {---------}
+    puts "Row: $row"
+    puts {---------}
     foreach value $list {
-        puts "[lindex $columns $column] => $value";
-        incr i;
+        puts "[lindex $columns $column] => $value"
+        incr i
     }
-    incr row;
-};
+    incr row
+}
