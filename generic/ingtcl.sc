@@ -742,13 +742,20 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
     for (i = 0; i < sqlda->sqld; ++i)
     {
         IISQLVAR *var;
+        short nullable;
 
         var = &sqlda->sqlvar[i];
 
         if(var->sqltype < 0)
+        {
             var->sqlind = (short*)ckalloc(sizeof(short));
+            nullable = 1;
+        }
         else
+        {
             var->sqlind = NULL;
+            nullable = 0;
+        }
 
         var->sqltype = abs(var->sqltype);
 
@@ -833,6 +840,10 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
             Tcl_SetObjResult(interp, Tcl_NewStringObj("IngTcl: fetch_row: Unsupported type (m)!", -1));
             return TCL_ERROR;
         }
+
+        /* Restore original sign */
+        if (nullable)
+            var->sqltype = -var->sqltype;     
     }
 
     /* Fetch row */
@@ -866,6 +877,15 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
         Tcl_Obj *tcl_var;
 
         var = &sqlda->sqlvar[i];
+        var->sqltype = abs(var->sqltype);
+
+        if (*(var->sqlind) == -1)
+        {
+            /* For NULL value we will output empty string */
+            tcl_var = Tcl_NewStringObj("", 0);
+            Tcl_ListObjAppendElement(interp, row, tcl_var);
+            continue;
+        }
 
         switch (var->sqltype)
         {
