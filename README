@@ -72,15 +72,14 @@ Installation instructions:
 
    (Note that this command MUST be entered in SINGLE line)
    +---------------------------------------------------------------------------+
-   | nmake /f Makefile.vc TCLDIR=C:\Tcl INSTALLDIR=C:\Tcl\lib\tcl8.5           |
-   | MACHINE=IX86                                                              |
+   | nmake /f Makefile.vc TCLDIR=C:\Tcl INSTALLDIR=C:\Tcl\lib MACHINE=IX86     |
    +---------------------------------------------------------------------------+
 
 6. Install:
 
     (Note that this command MUST be entered in SINGLE line)
    +---------------------------------------------------------------------------+
-   | nmake /f Makefile.vc install TCLDIR=C:\Tcl INSTALLDIR=C:\Tcl\lib\tcl8.5   |
+   | nmake /f Makefile.vc install TCLDIR=C:\Tcl INSTALLDIR=C:\Tcl\lib          |
    | MACHINE=IX86                                                              |
    +---------------------------------------------------------------------------+
 
@@ -94,7 +93,8 @@ To build and install IngTcl under UNIX/Linux you need following software;
 
 - Ingres
 - Tcl (on some Linux distributions you need tcl-dev or tcl-devel package)
-- Visual C++
+- C Compiler
+- Make
 
 Note that if II_SYSTEM environment variable is not set, build process will
 fail.
@@ -206,7 +206,7 @@ Please report successes and failures to xenu@poczta.onet.pl
 
 - IngTcl::rollback session
 
-    It commits rollbacks transaction.
+    It rollbacks current transaction.
     
     It returns 1 on success, otherwise it throws an expection.
 
