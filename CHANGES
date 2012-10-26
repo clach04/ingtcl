@@ -1,2 +1,4 @@
+v0.2     TBD
+ - NULL is returned to user as empty string
 v0.1     2012.07.18
  - Initial release
