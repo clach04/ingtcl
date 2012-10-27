@@ -86,6 +86,11 @@ dict for {type value} $types_dict {
     } 1
     incr i
 
+    test "datatypes-$i" "Delete cursor (1) ($type)." {
+        IngTcl::delete_cursor $session $cursor
+    } 1
+    incr i
+
     test "datatypes-$i" "Prepare SELECT ($type)." {
         set cursor [IngTcl::prepare $session "SELECT * FROM $test_table"]
         info exists cursor
@@ -118,6 +123,11 @@ dict for {type value} $types_dict {
 
     test "datatypes-$i" "Close cursor (2) ($type)." {
         IngTcl::close_cursor $session $cursor
+    } 1
+    incr i
+
+    test "datatypes-$i" "Delete cursor (2) ($type)." {
+        IngTcl::delete_cursor $session $cursor
     } 1
     incr i
 
