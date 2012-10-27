@@ -7,5 +7,6 @@ Copyright (c) 2012 Tomasz Konojacki
 v0.2     TBD
  - NULL is returned to user as empty string
  - Much better tests
+ - SQL indicators are now freed when cursor is deleted
 v0.1     2012.07.18
  - Initial release

@@ -59,6 +59,7 @@ DeleteCursor_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const 
 
         var = &sqlda->sqlvar[i];
         ckfree(var->sqldata);
+        ckfree(var->sqlind);
     }
 
     ckfree((char*)sqlda);
