@@ -61,13 +61,23 @@ dict for {type value} $types_dict {
     set cursor {}
     set row {}
 
-    test "datatypes-$i" "CREATE TABLE ($type)." {
-        IngTcl::do $session "
-            CREATE TABLE $test_table (
-                foobar $type    
-            )
-        "
-    } 1
+    if {[IngTcl::is_vectorwise $session]} {
+        test "datatypes-$i" "CREATE TABLE ($type)." {
+            IngTcl::do $session "
+                CREATE TABLE $test_table (
+                    foobar $type    
+                ) WITH STRUCTURE=HEAP
+            "
+        } 1
+    } else {
+        test "datatypes-$i" "CREATE TABLE ($type)." {
+            IngTcl::do $session "
+                CREATE TABLE $test_table (
+                    foobar $type    
+                )
+            "
+        } 1
+    }
     incr i
 
     test "datatypes-$i" "Prepare INSERT ($type)." {
