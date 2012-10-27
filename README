@@ -241,6 +241,20 @@ Please report successes and failures to xenu@poczta.onet.pl
     IngTcl::quote returns quoted string, it can be used in statement without
     placeholders.
 
+- IngTcl::dbms_name session
+
+    Returns name of the RDBMS that you are connected to. It will return 
+    "Vectorwise" or "Ingres" or "unknown".
+
+- IngTcl::dbms_version session
+
+    Returns version of the RDBMS that you are connected to. It will return 
+    "unknown" on failure.
+
+- IngTcl::is_vectorwise session
+
+    Returns 1 if you are connected to Vectorwise, otherwise it returns 0.
+
 7. Examples
 ===========
 
