@@ -8,5 +8,10 @@ v0.2     TBD
  - NULL is returned to user as empty string
  - Much better tests
  - NULL indicators are now freed when cursor is deleted
+ - Tests are Vectorwise-aware
+ - Added IngTcl::dbms_name procedure
+ - Added IngTcl::dbms_version procedure
+ - Added IngTcl::is_vectorwise procedure
+
 v0.1     2012.07.18
  - Initial release
