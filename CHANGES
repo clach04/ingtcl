@@ -4,7 +4,7 @@ of this file, and for a DISCLAIMER OF ALL WARRANTIES.
 Copyright (c) 2012 Tomasz Konojacki
 ========================================================================
 
-v0.2     TBD
+v0.2     2012.10.27
  - NULL is returned to user as empty string
  - Much better tests
  - NULL indicators are now freed when cursor is deleted
@@ -12,6 +12,5 @@ v0.2     TBD
  - Added IngTcl::dbms_name procedure
  - Added IngTcl::dbms_version procedure
  - Added IngTcl::is_vectorwise procedure
-
 v0.1     2012.07.18
  - Initial release

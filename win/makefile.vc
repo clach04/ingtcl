@@ -169,7 +169,7 @@ PROJECT = IngTcl
 #PROJECT_REQUIRES_TK=1
 !include "rules.vc"
 
-DOTVERSION      = 0.1
+DOTVERSION      = 0.2
 VERSION         = $(DOTVERSION:.=)
 STUBPREFIX      = $(PROJECT)stub
 

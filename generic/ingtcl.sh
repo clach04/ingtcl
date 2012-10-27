@@ -21,7 +21,7 @@ EXEC SQL INCLUDE SQLDA;
 EXEC SQL INCLUDE SQLCA;
 
 
-#   define INGTCL_VERSION "0.1"
+#   define INGTCL_VERSION "0.2"
 
 typedef struct cursor {
     short is_closed;
