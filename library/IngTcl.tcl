@@ -5,7 +5,7 @@
 # Copyright (c) 2012 Tomasz Konojacki
 #
 
-package provide IngTcl 0.1
+package provide IngTcl 0.2
 
 namespace eval ::IngTcl {
     namespace export *
