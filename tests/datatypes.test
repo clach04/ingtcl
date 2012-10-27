@@ -50,15 +50,13 @@ set types_dict {
     {TIMESTAMP WITH LOCAL TIME ZONE}    {2006-01-12 10:56:12.245562}
 }
 
-test datatypes-1 {Connect to database.} {
-    set session [dbconnect]
-} 1
+set session [dbconnect]
 
 # Silently ignore error
 catch {IngTcl::do $session "drop table $test_table"}
 IngTcl::commit $session
 
-set i 2
+set i 1
 dict for {type value} $types_dict {
     set cursor {}
     set row {}
