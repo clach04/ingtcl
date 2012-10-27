@@ -880,7 +880,7 @@ FetchRow_Cmd(ClientData cdata, Tcl_Interp *interp, int objc, Tcl_Obj *const objv
         var = &sqlda->sqlvar[i];
         var->sqltype = abs(var->sqltype);
 
-        if (*(var->sqlind) == -1)
+        if ((var->sqlind != NULL) && (*(var->sqlind) == -1))
         {
             /* For NULL value we will output empty string */
             tcl_var = Tcl_NewStringObj("", 0);
