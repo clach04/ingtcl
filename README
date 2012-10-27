@@ -136,10 +136,13 @@ Installation instructions:
 
 IngTcl was tested under following platforms:
 
-- Ingres 10.1 Community Build 121 + Windows + Visual C++ on x86
+- Vectorwise 2.5.1 Enterprise Build 162 + Windows + Visual C++ on x64
+- Ingres 10.1 Community Build 125 + Windows + Visual C++ on x64
+- Ingres 10.1 Community Build 125 + Linux + gcc on x64
 - Ingres 10.1 Community Build 121 + Windows + Visual C++ on x64
-- Ingres 10.1 Community Build 121 + Linux + gcc on x86
+- Ingres 10.1 Community Build 121 + Windows + Visual C++ on x86
 - Ingres 10.1 Community Build 121 + Linux + gcc on x64
+- Ingres 10.1 Community Build 121 + Linux + gcc on x86
 
 Please report successes and failures to xenu@poczta.onet.pl
 
