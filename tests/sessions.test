@@ -26,29 +26,26 @@ proc dbconnect {} {
     return $conn
 }
 
-test sessions-1 {Check if session-id is incremented (first-run).} {
-    set session1 [dbconnect]
-    info exists session1
-} 1
+set session1 [dbconnect]
 
-test sessions-2 {Check if session-id is incremented (second-run).} {
+test sessions-1 {Check if session-id is incremented (second-run).} {
     set session2 [dbconnect]
     expr {($session1 + 1) == $session2}
 } 1
 
-test sessions-3 {Check if session-id is incremented (third-run).} {
+test sessions-2 {Check if session-id is incremented (third-run).} {
     set session3 [dbconnect]
     expr {($session1 + 2) == $session3}
 } 1
 
-test sessions-4 {Disconnect (First connection).} {
+test sessions-3 {Disconnect (First connection).} {
     IngTcl::disconnect $session1
 } 1
 
-test sessions-5 {Disconnect (Second connection).} {
+test sessions-4 {Disconnect (Second connection).} {
     IngTcl::disconnect $session2
 } 1
 
-test sessions-6 {Disconnect (Third connection).} {
+test sessions-5 {Disconnect (Third connection).} {
     IngTcl::disconnect $session3
 } 1
