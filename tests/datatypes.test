@@ -72,40 +72,40 @@ dict for {type value} $types_dict {
     } 1
     incr i
 
-    test "datatypes-$i" "PREPARE INSERT ($type)." {
+    test "datatypes-$i" "Prepare INSERT ($type)." {
         set cursor [IngTcl::prepare $session "INSERT INTO $test_table VALUES (?)"]
         info exists cursor
     } 1
     incr i    
 
-    test "datatypes-$i" "EXECUTE INSERT ($type)." {
+    test "datatypes-$i" "Execute INSERT ($type)." {
         IngTcl::execute $session $cursor $value
     } 1
     incr i
 
-    test "datatypes-$i" "CLOSE CURSOR1 ($type)." {
+    test "datatypes-$i" "Close cursor (1) ($type)." {
         IngTcl::close_cursor $session $cursor
     } 1
     incr i
 
-    test "datatypes-$i" "PREPARE SELECT ($type)." {
+    test "datatypes-$i" "Prepare SELECT ($type)." {
         set cursor [IngTcl::prepare $session "SELECT * FROM $test_table"]
         info exists cursor
     } 1
     incr i
 
-    test "datatypes-$i" "EXECUTE SELECT ($type)." {
+    test "datatypes-$i" "Execute SELECT ($type)." {
         IngTcl::execute $session $cursor
     } 1
     incr i
 
-    test "datatypes-$i" "FETCH ROW ($type)." {
+    test "datatypes-$i" "Fetch row ($type)." {
         set row [IngTcl::fetch_row $session $cursor]
         info exists row
     } 1
     incr i
 
-    test "datatypes-$i" "CHECK RETURNED ROW ($type)." {
+    test "datatypes-$i" "Check returned row ($type)." {
         set val {}
 
         if {($type eq "BYTE(4)") || ($type eq "BYTE VARYING(30)")} {
@@ -118,17 +118,17 @@ dict for {type value} $types_dict {
     } 1
     incr i
 
-    test "datatypes-$i" "CLOSE CURSOR2 ($type)." {
+    test "datatypes-$i" "Close cursor (2) ($type)." {
         IngTcl::close_cursor $session $cursor
     } 1
     incr i
 
-    test "datatypes-$i" "DELETE TABLE ($type)." {
+    test "datatypes-$i" "DROP TABLE ($type)." {
         IngTcl::do $session "DROP TABLE $test_table"
     } 1
     incr i
 }
 
-test datatypes-46 {Disconnect.} {
+test "datatypes-$i" {Disconnect.} {
     IngTcl::disconnect $session
 } 1
