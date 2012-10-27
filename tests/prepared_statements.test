@@ -33,7 +33,11 @@ catch {IngTcl::do $session {drop table testdfaas}}
 IngTcl::commit $session
 
 test prepared_statements-1 {Create table.} {
-    IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60))}
+    if {[IngTcl::is_vectorwise $session]} {
+        IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60)) WITH STRUCTURE=HEAP}
+    } else {
+        IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60))}
+    }
 } 1
 
 test prepared_statements-2 {Prepare INSERT.} {
