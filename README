@@ -1,6 +1,6 @@
 
 
-                      IngTcl 0.1 - An Ingres driver for Tcl
+                      IngTcl 0.2 - An Ingres driver for Tcl
                       =====================================
 
 1. Licensing and copyright
@@ -27,8 +27,8 @@ more information see copyright notices in each file.
 2. What is IngTcl
 =================
 
-IngTcl is Tcl extension which allows connecting to Ingres database from Tcl
-scripts. It is written using Tcl C API and ESQL/C.
+IngTcl is Tcl extension which allows connecting to Actian Ingres database or
+Actian Vectorwise from Tcl scripts. It is written using Tcl C API and ESQL/C.
 
 IngTcl is very easy to use, see "Examples" section.
 
