@@ -143,6 +143,7 @@ IngTcl was tested under following platforms:
 - Ingres 10.1 Community Build 121 + Windows + Visual C++ on x86
 - Ingres 10.1 Community Build 121 + Linux + gcc on x64
 - Ingres 10.1 Community Build 121 + Linux + gcc on x86
+- Ingres 9.2.3 Enterprise Build 101 + Windows + Visual C++ on x86
 
 Please report successes and failures to me@xenu.tk
 
