@@ -4,6 +4,8 @@ of this file, and for a DISCLAIMER OF ALL WARRANTIES.
 Copyright (c) 2012 Tomasz Konojacki
 ========================================================================
 
+v0.3     TBD
+ - Now driver should for under Ingres 9.2 and 9.3
 v0.2     2012.10.27
  - NULL is returned to user as empty string
  - Much better tests

@@ -61,6 +61,11 @@ dict for {type value} $types_dict {
     set cursor {}
     set row {}
 
+    # By default, we should skip testing of BOOLEAN (for compatibility with Ingres 9.3 and older)
+    if {![info exists ::env(INGTCL_TEST_BOOLEAN)] || ($::env(INGTCL_TEST_BOOLEAN) == 0)} {
+        continue
+    }
+    
     if {[IngTcl::is_vectorwise $session]} {
         test "datatypes-$i" "CREATE TABLE ($type)." {
             IngTcl::do $session "

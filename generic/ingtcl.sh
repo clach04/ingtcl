@@ -20,8 +20,12 @@
 EXEC SQL INCLUDE SQLDA;
 EXEC SQL INCLUDE SQLCA;
 
-
 #   define INGTCL_VERSION "0.2"
+
+#   ifndef IISQ_BOO_TYPE
+    /* For 9.3 and older */
+#       define IISQ_BOO_TYPE -9998
+#   endif
 
 typedef struct cursor {
     short is_closed;
