@@ -62,7 +62,8 @@ dict for {type value} $types_dict {
     set row {}
 
     # By default, we should skip testing of BOOLEAN (for compatibility with Ingres 9.3 and older)
-    if {![info exists ::env(INGTCL_TEST_BOOLEAN)] || ($::env(INGTCL_TEST_BOOLEAN) == 0)} {
+    if {(![info exists ::env(INGTCL_TEST_BOOLEAN)] || ($::env(INGTCL_TEST_BOOLEAN) == 0))
+       && ($type eq "BOOLEAN")} {
         continue
     }
     
