@@ -7,6 +7,7 @@ Copyright (c) 2012 Tomasz Konojacki
 v0.3     2012.11.23
  - Now driver should work under Ingres 9.2 and 9.3
  - Fixed namespace issues
+ - ::IngTcl::is_vectorwise returns 0 or 1, as documented
 v0.2     2012.10.27
  - NULL is returned to user as empty string
  - Much better tests

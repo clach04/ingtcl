@@ -68,8 +68,8 @@ proc ::IngTcl::dbms_version {session} {
 
 proc ::IngTcl::is_vectorwise {session} {
     if {[::IngTcl::dbms_name $session] eq "Vectorwise"} {
-        return true
+        return 1
     }
 
-    return false
+    return 0
 }
