@@ -1,7 +1,7 @@
 #
 # See the file "license.terms" for information on usage and redistribution
-# of this file, and for a DISCLAIMER OF ALL WARRANTIES.                   
-#                                                                       
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
 # Copyright (c) 2012 Tomasz Konojacki
 #
 
@@ -43,7 +43,7 @@ proc ::IngTcl::dbms_name {session} {
             }
         }
     }
-    
+
     return unknown
 }
 
@@ -62,7 +62,7 @@ proc ::IngTcl::dbms_version {session} {
     if {[regexp {^(II|VW) (\d+\.\d+\.\d+)} [lindex $row 0] {} {} version]} {
         return $version
     }
-    
+
     return unknown
 }
 

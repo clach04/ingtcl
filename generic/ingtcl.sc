@@ -1166,23 +1166,23 @@ Ingtcl_Init(Tcl_Interp *interp)
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL)
         return TCL_ERROR;
         
-    nsPtr = Tcl_CreateNamespace(interp, "IngTcl", NULL, NULL);
+    nsPtr = Tcl_CreateNamespace(interp, "::IngTcl", NULL, NULL);
     if (nsPtr == NULL)
         return TCL_ERROR;
 
-    Tcl_CreateObjCommand(interp, "IngTcl::connect", Connect_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::prepare", Prepare_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::execute", Execute_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::do", Do_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::fetch_column_names", FetchColumnNames_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::fetch_row", FetchRow_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::is_cursor_closed", IsCursorClosed_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::close_cursor", CloseCursor_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::disconnect", Disconnect_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::commit", Commit_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::rollback", Rollback_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::set_autocommit", SetAutoCommit_Cmd, NULL, NULL);
-    Tcl_CreateObjCommand(interp, "IngTcl::delete_cursor", DeleteCursor_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::connect", Connect_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::prepare", Prepare_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::execute", Execute_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::do", Do_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::fetch_column_names", FetchColumnNames_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::fetch_row", FetchRow_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::is_cursor_closed", IsCursorClosed_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::close_cursor", CloseCursor_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::disconnect", Disconnect_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::commit", Commit_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::rollback", Rollback_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::set_autocommit", SetAutoCommit_Cmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "::IngTcl::delete_cursor", DeleteCursor_Cmd, NULL, NULL);
 
     Tcl_PkgProvide(interp, "IngTcl", INGTCL_VERSION);
 

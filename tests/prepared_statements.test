@@ -1,7 +1,7 @@
-# 
+#
 # See the file "license.terms" for information on usage and redistribution
-# of this file, and for a DISCLAIMER OF ALL WARRANTIES.                   
-#                                                                       
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
 # Copyright (c) 2012 Tomasz Konojacki
 #
 
@@ -16,11 +16,11 @@ proc dbconnect {} {
     }
 
     if {[info exists ::env(INGTCL_DBUSER)] && [info exists ::env(INGTCL_PASSWORD)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
+        set conn [::IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
     } elseif {[info exists ::env(INGTCL_DBUSER)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
+        set conn [::IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
     } else {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME)]
+        set conn [::IngTcl::connect $::env(INGTCL_DBNAME)]
     }
 
     return $conn
@@ -29,42 +29,42 @@ proc dbconnect {} {
 set session [dbconnect]
 
 # Silently ignore error
-catch {IngTcl::do $session {drop table testdfaas}}
-IngTcl::commit $session
+catch {::IngTcl::do $session {drop table testdfaas}}
+::IngTcl::commit $session
 
 test prepared_statements-1 {Create table.} {
-    if {[IngTcl::is_vectorwise $session]} {
-        IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60)) WITH STRUCTURE=HEAP}
+    if {[::IngTcl::is_vectorwise $session]} {
+        ::IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60)) WITH STRUCTURE=HEAP}
     } else {
-        IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60))}
+        ::IngTcl::do $session {CREATE TABLE testdfaas (id INT4, content VARCHAR(60))}
     }
 } 1
 
 test prepared_statements-2 {Prepare INSERT.} {
-    set cursor [IngTcl::prepare $session {INSERT INTO testdfaas VALUES (?, ?)}]
+    set cursor [::IngTcl::prepare $session {INSERT INTO testdfaas VALUES (?, ?)}]
     info exists cursor
 } 1
 
 test prepared_statements-3 {Execute INSERT.} {
-    IngTcl::execute $session $cursor 1234567 "kielbasa"
+    ::IngTcl::execute $session $cursor 1234567 "kielbasa"
 } 1
 
 test prepared_statements-4 {Delete cursor.} {
-    IngTcl::close_cursor $session $cursor
-    IngTcl::delete_cursor $session $cursor
+    ::IngTcl::close_cursor $session $cursor
+    ::IngTcl::delete_cursor $session $cursor
 } 1
 
 test prepared_statements-5 {Prepare SELECT.} {
-    set cursor [IngTcl::prepare $session {SELECT * FROM testdfaas}]
+    set cursor [::IngTcl::prepare $session {SELECT * FROM testdfaas}]
     info exists cursor
 } 1
 
 test prepared_statements-6 {Execute SELECT.} {
-    IngTcl::execute $session $cursor
+    ::IngTcl::execute $session $cursor
 } 1
 
 test prepared_statements-7 {Fetch row.} {
-    set list [IngTcl::fetch_row $session $cursor]
+    set list [::IngTcl::fetch_row $session $cursor]
     info exists list
 } 1
 
@@ -77,14 +77,14 @@ test prepared_statements-9 {Equality of second value.} {
 } 1
 
 test prepared_statements-10 {Delete cursor (2).} {
-    IngTcl::close_cursor $session $cursor
-    IngTcl::delete_cursor $session $cursor
+    ::IngTcl::close_cursor $session $cursor
+    ::IngTcl::delete_cursor $session $cursor
 } 1
 
 test prepared_statements-11 {Rollback.} {
-    IngTcl::rollback $session
+    ::IngTcl::rollback $session
 } 1
 
 test prepared_statements-12 {Disconnect.} {
-    IngTcl::disconnect $session
+    ::IngTcl::disconnect $session
 } 1

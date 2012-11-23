@@ -1,7 +1,7 @@
-# 
+#
 # See the file "license.terms" for information on usage and redistribution
-# of this file, and for a DISCLAIMER OF ALL WARRANTIES.                   
-#                                                                       
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
 # Copyright (c) 2012 Tomasz Konojacki
 #
 
@@ -15,11 +15,11 @@ proc dbconnect {} {
     }
 
     if {[info exists ::env(INGTCL_DBUSER)] && [info exists ::env(INGTCL_PASSWORD)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
+        set conn [::IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER) $::env(INGTCL_PASSWORD)]
     } elseif {[info exists ::env(INGTCL_DBUSER)]} {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
+        set conn [::IngTcl::connect $::env(INGTCL_DBNAME) $::env(INGTCL_DBUSER)]
     } else {
-        set conn [IngTcl::connect $::env(INGTCL_DBNAME)]
+        set conn [::IngTcl::connect $::env(INGTCL_DBNAME)]
     }
 
     return $conn
@@ -53,8 +53,8 @@ set types_dict {
 set session [dbconnect]
 
 # Silently ignore error
-catch {IngTcl::do $session "drop table $test_table"}
-IngTcl::commit $session
+catch {::IngTcl::do $session "drop table $test_table"}
+::IngTcl::commit $session
 
 set i 1
 dict for {type value} $types_dict {
@@ -66,20 +66,20 @@ dict for {type value} $types_dict {
        && ($type eq "BOOLEAN")} {
         continue
     }
-    
-    if {[IngTcl::is_vectorwise $session]} {
+
+    if {[::IngTcl::is_vectorwise $session]} {
         test "datatypes-$i" "CREATE TABLE ($type)." {
-            IngTcl::do $session "
+            ::IngTcl::do $session "
                 CREATE TABLE $test_table (
-                    foobar $type    
+                    foobar $type
                 ) WITH STRUCTURE=HEAP
             "
         } 1
     } else {
         test "datatypes-$i" "CREATE TABLE ($type)." {
-            IngTcl::do $session "
+            ::IngTcl::do $session "
                 CREATE TABLE $test_table (
-                    foobar $type    
+                    foobar $type
                 )
             "
         } 1
@@ -87,39 +87,39 @@ dict for {type value} $types_dict {
     incr i
 
     test "datatypes-$i" "Prepare INSERT ($type)." {
-        set cursor [IngTcl::prepare $session "INSERT INTO $test_table VALUES (?)"]
+        set cursor [::IngTcl::prepare $session "INSERT INTO $test_table VALUES (?)"]
         info exists cursor
     } 1
-    incr i    
+    incr i
 
     test "datatypes-$i" "Execute INSERT ($type)." {
-        IngTcl::execute $session $cursor $value
+        ::IngTcl::execute $session $cursor $value
     } 1
     incr i
 
     test "datatypes-$i" "Close cursor (1) ($type)." {
-        IngTcl::close_cursor $session $cursor
+        ::IngTcl::close_cursor $session $cursor
     } 1
     incr i
 
     test "datatypes-$i" "Delete cursor (1) ($type)." {
-        IngTcl::delete_cursor $session $cursor
+        ::IngTcl::delete_cursor $session $cursor
     } 1
     incr i
 
     test "datatypes-$i" "Prepare SELECT ($type)." {
-        set cursor [IngTcl::prepare $session "SELECT * FROM $test_table"]
+        set cursor [::IngTcl::prepare $session "SELECT * FROM $test_table"]
         info exists cursor
     } 1
     incr i
 
     test "datatypes-$i" "Execute SELECT ($type)." {
-        IngTcl::execute $session $cursor
+        ::IngTcl::execute $session $cursor
     } 1
     incr i
 
     test "datatypes-$i" "Fetch row ($type)." {
-        set row [IngTcl::fetch_row $session $cursor]
+        set row [::IngTcl::fetch_row $session $cursor]
         info exists row
     } 1
     incr i
@@ -138,21 +138,21 @@ dict for {type value} $types_dict {
     incr i
 
     test "datatypes-$i" "Close cursor (2) ($type)." {
-        IngTcl::close_cursor $session $cursor
+        ::IngTcl::close_cursor $session $cursor
     } 1
     incr i
 
     test "datatypes-$i" "Delete cursor (2) ($type)." {
-        IngTcl::delete_cursor $session $cursor
+        ::IngTcl::delete_cursor $session $cursor
     } 1
     incr i
 
     test "datatypes-$i" "DROP TABLE ($type)." {
-        IngTcl::do $session "DROP TABLE $test_table"
+        ::IngTcl::do $session "DROP TABLE $test_table"
     } 1
     incr i
 }
 
 test "datatypes-$i" {Disconnect.} {
-    IngTcl::disconnect $session
+    ::IngTcl::disconnect $session
 } 1

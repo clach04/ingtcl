@@ -150,31 +150,31 @@ Please report successes and failures to me@xenu.tk
 6. List of commands
 ===================
 
-- IngTcl::connect dbname ?login? ?password? ?options?
+- ::IngTcl::connect dbname ?login? ?password? ?options?
   
-    IngTcl::connect to database specified in "dbname" argument.
+    ::IngTcl::connect to database specified in "dbname" argument.
     
     It returns number of session which is required by other commands, on
     failure it will throw exception.
 
-- IngTcl::prepare session statement
+- ::IngTcl::prepare session statement
   
-    IngTcl::prepare prepares statement. It should be used only for SELECT
-    statements, IngTcl::do will be faster for statements which doesn't return
+    ::IngTcl::prepare prepares statement. It should be used only for SELECT
+    statements, ::IngTcl::do will be faster for statements which doesn't return
     anything.
     
-    This command returns cursor which will be needed for IngTcl::execute, on
+    This command returns cursor which will be needed for ::IngTcl::execute, on
     failure it will throw exception.
 
 
-- IngTcl::execute session cursor ?arg1 arg2 ...?
+- ::IngTcl::execute session cursor ?arg1 arg2 ...?
     
-    It executes statement prepared by IngTcl::prepare. arg1, args2 etc. will
+    It executes statement prepared by ::IngTcl::prepare. arg1, args2 etc. will
     be inserted in place of question marks (?) in statement.
 
     It returns 1 on success, otherwise it throws an exception.
 
-- IngTcl::fetch_row session cursor
+- ::IngTcl::fetch_row session cursor
 
     It fetches row from table using specified cursor. When there are no more
     rows, cursor is automatically closed.
@@ -182,80 +182,80 @@ Please report successes and failures to me@xenu.tk
     On success, it returns list containg fetched row, otherwise it throws
     an exception.
 
-- IngTcl::fetch_column_names session cursor
+- ::IngTcl::fetch_column_names session cursor
 
     It fetches column names from table using specified cursor.
 
     On success, it returns list containg fetched colum names, otherwise it
     throws an exception.
 
-- IngTcl::do session statement
+- ::IngTcl::do session statement
 
     This command executes statement specified in statement argument. Note that
     there is no way to capture output of statement.
 
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcl::set_autocommit session enable_autocommit
+- ::IngTcl::set_autocommit session enable_autocommit
 
-    IngTcl::set_autocommit enables or disables AutoCommit for specified session.
+    ::IngTcl::set_autocommit enables or disables AutoCommit for specified session.
 
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcl::commit session
+- ::IngTcl::commit session
 
     It commits current transaction.
     
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcl::rollback session
+- ::IngTcl::rollback session
 
     It rollbacks current transaction.
     
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcl::close_cursor session cursor
+- ::IngTcl::close_cursor session cursor
     
-    It closes cursor. Note that IngTcl::fetch_row automatically closes cursor
+    It closes cursor. Note that ::IngTcl::fetch_row automatically closes cursor
     when all rows are fetched.
 
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcll::is_cursor_closed session cursor
+- ::IngTcl::is_cursor_closed session cursor
 
     This command returns 1 if specified cursor is closed, otherwise it returns
     0.
 
-- IngTcl::delete_cursor session cursor
+- ::IngTcl::delete_cursor session cursor
 
-    IngTcl::delete_cursor deletes cursor. You really should delete cursor when
-    you don't need it anymore. IngTcl::delete_cursor will throw exception if 
+    ::IngTcl::delete_cursor deletes cursor. You really should delete cursor when
+    you don't need it anymore. ::IngTcl::delete_cursor will throw exception if 
     cursor isnnot closed.
 
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcl::disconnect session
+- ::IngTcl::disconnect session
     
     It disconnect from database.
 
     It returns 1 on success, otherwise it throws an expection.
 
-- IngTcl::quote str
+- ::IngTcl::quote str
     
-    IngTcl::quote returns quoted string, it can be used in statement without
+    ::IngTcl::quote returns quoted string, it can be used in statement without
     placeholders.
 
-- IngTcl::dbms_name session
+- ::IngTcl::dbms_name session
 
     Returns name of the RDBMS that you are connected to. It will return 
     "Vectorwise" or "Ingres" or "unknown".
 
-- IngTcl::dbms_version session
+- ::IngTcl::dbms_version session
 
     Returns version of the RDBMS that you are connected to. It will return 
     "unknown" on failure.
 
-- IngTcl::is_vectorwise session
+- ::IngTcl::is_vectorwise session
 
     Returns 1 if you are connected to Vectorwise, otherwise it returns 0.
 
@@ -268,16 +268,16 @@ Please report successes and failures to me@xenu.tk
 
 package require IngTcl
 
-set session [IngTcl::connect {somedb}]
+set session [::IngTcl::connect {somedb}]
 
-set cursor [IngTcl::prepare $session "select * from lol"]
-IngTcl::execute $session $cursor
+set cursor [::IngTcl::prepare $session "select * from lol"]
+::IngTcl::execute $session $cursor
 
-set columns [IngTcl::fetch_column_names $session $cursor]
+set columns [::IngTcl::fetch_column_names $session $cursor]
 
 set row 0
-while {![IngTcl::is_cursor_closed $session $cursor]} {
-    set list [IngTcl::fetch_row $session $cursor]
+while {![::IngTcl::is_cursor_closed $session $cursor]} {
+    set list [::IngTcl::fetch_row $session $cursor]
     if {[llength $list] > 0} { # Check if list is not empty
         set column 0
         puts {~~~~~~~~~}
@@ -295,20 +295,20 @@ while {![IngTcl::is_cursor_closed $session $cursor]} {
 ##### SECOND EXAMPLE #####
 
 # It does exactly the same thing as first example, but this time we're not using
-# IngTcl::is_cursor_closed
+# ::IngTcl::is_cursor_closed
 
 package require IngTcl
 
-set session [IngTcl::connect {demodb}]
+set session [::IngTcl::connect {demodb}]
 
-set cursor [IngTcl::prepare $session "select * from lol"]
+set cursor [::IngTcl::prepare $session "select * from lol"]
 
-IngTcl::execute $session $cursor
+::IngTcl::execute $session $cursor
 
-set columns [IngTcl::fetch_column_names $session $cursor]
+set columns [::IngTcl::fetch_column_names $session $cursor]
 
 set row 0
-while {[llength [set list [IngTcl::fetch_row $session $cursor]]] > 0} {
+while {[llength [set list [::IngTcl::fetch_row $session $cursor]]] > 0} {
     set column 0
     puts {---------}
     puts "Row: $row"
