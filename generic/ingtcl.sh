@@ -20,7 +20,7 @@
 EXEC SQL INCLUDE SQLDA;
 EXEC SQL INCLUDE SQLCA;
 
-#   define INGTCL_VERSION "0.2"
+#   define INGTCL_VERSION "0.3"
 
 #   ifndef IISQ_BOO_TYPE
     /* For 9.3 and older */
