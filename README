@@ -65,8 +65,8 @@ Installation instructions:
 5. Execute Makefile:
 
    - TCLDIR should be set to path where Tcl is installed (usually "C:\Tcl")
-   - INSTALLDIR usually should be set to (TCLDIR)\lib\tcl(version), for example:
-     "C:\Tcl\lib\tcl8.5"
+   - INSTALLDIR usually should be set to (TCLDIR)\lib, for example:
+     "C:\Tcl\lib"
    - MACHINE should be set to your architecture - "AMD64" for 64-bit systems and
      "IX86" for 32-bit.
 
